@@ -25,3 +25,17 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.button {
+  background-color: rgb(62, 81, 157);
+  color: rgb(210, 210, 210);
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: rgba(62, 81, 157, 0.736);
+}
+
+.rounded-image {
+  border-radius: 50%;
+}

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from 'next/link';
 import { supabase } from "@/utils/supabase";
+import Main from "@/components/Main";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -49,7 +50,7 @@ const Signup = () => {
   }
 
   return (
-    <>
+    <Main>
       <div className="flex h-screen justify-center items-center">
         <div className="bg-gray-800 p-8 rounded-lg shadow-md w-96">
           <h1 className="text-2xl font-semibold mb-4">Sign Up</h1>
@@ -124,7 +125,7 @@ const Signup = () => {
           </form>
         </div>
       </div>
-    </>
+    </Main>
   )
 }
 

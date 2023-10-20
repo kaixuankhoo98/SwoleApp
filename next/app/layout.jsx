@@ -1,5 +1,4 @@
 import Navbar from '@/components/Navbar'
-import Head from 'next/head';
 import './globals.css'
 
 export const metadata = {

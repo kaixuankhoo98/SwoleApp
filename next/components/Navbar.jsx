@@ -4,8 +4,8 @@ const Navbar = ({ loggedIn, onSignOut }) => {
   return (
     <nav className="bg-blue-500 p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" className="text-white text-xl font-bold">
-          Home
+        <Link href="/">
+          <img src="/favicon.ico" alt="Logo" className="logo-image rounded-image" />
         </Link>
         
         <div className="space-x-4">
@@ -15,7 +15,6 @@ const Navbar = ({ loggedIn, onSignOut }) => {
           <Link href="/contact" className="text-white">
             Contact
           </Link>
-          {/* Add more navigation tabs as needed */}
         </div>
 
         {loggedIn ? (
