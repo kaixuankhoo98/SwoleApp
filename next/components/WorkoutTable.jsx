@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
+import AddButton from './AddButton';
 
 const columns = [
   {
@@ -69,16 +70,7 @@ export default function WorkoutTable({ data }) {
         autoHeight
         disableRowSelectionOnClick
       />
-      <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center' }}>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          sx={{ width: '200px', padding: '12px' }}
-          className='button'
-        >
-          Add Workout
-        </Button>
-      </div>
+      <AddButton text={'Add Workout'}/>
     </Box>
   )
 }
