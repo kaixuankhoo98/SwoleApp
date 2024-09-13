@@ -5,14 +5,13 @@ import { FC } from "react";
 import StartWorkoutButton from "./StartWorkoutButton";
 
 const Home: FC = () => {
-  const user = useUser();
+  const { data } = useUser();
 
   return (
     <Main>
       <Stack direction="column" gap="1rem">
         <Typography variant="h4" align="center" sx={{ marginTop: "1.125rem" }}>
-          {" "}
-          {`Welcome back, ${user.name}!`}
+          {`Welcome back, ${data.firstName}!`}
         </Typography>
         <Box>
           <Typography variant="body1" align="center">

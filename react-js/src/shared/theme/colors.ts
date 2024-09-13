@@ -28,7 +28,7 @@ const colors = {
   darkOrange: '#BF5900',
   darkInfo: '#0960A5',
   grey300: '#d4d4d4',
-  blueChill: '#1280A0',
+  blueChill: '#1280A0',
 };
 
 export default colors;
