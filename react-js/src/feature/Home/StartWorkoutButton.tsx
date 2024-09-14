@@ -25,7 +25,7 @@ const StartWorkoutButton: FC = () => {
       }}
     >
       <Typography>Ready to start your next workout?</Typography>
-      <Button onClick={() => navigate("/workout")}>Get Started</Button>
+      <Button filled onClick={() => navigate("/workout")}>Get Started</Button>
     </Box>
   )
 };

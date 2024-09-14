@@ -8,7 +8,7 @@ interface ButtonProps {
   filled?: boolean;
 }
 
-const Button: FC<ButtonProps> = ({ children, onClick, filled = true }) => {
+const Button: FC<ButtonProps> = ({ children, onClick, filled }) => {
   return (
     <BaseButton
       variant={filled ? "contained" : "outlined"}
