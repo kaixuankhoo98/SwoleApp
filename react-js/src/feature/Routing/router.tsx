@@ -2,17 +2,20 @@ import { lazy } from "react";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import Home from "../Home/Home";
 import { GenericErrorBoundary } from "../../shared/components/Error/GenericErrorBoundary";
+import { ProtectedRoute } from "./ProtectedRoute";
 
-// const Home = lazy(() => import('../Home/Home'));
-const Profile = lazy(() => import("../Home/Home")); // TODO: change
-const Workout = lazy(() => import("../Workout/Workout")); // TODO: change
+// const Profile = lazy(() => import("../Home/Home")); 
+const Workout = lazy(() => import("../Workout/Workout")); 
+const Login = lazy(() => import("../Auth/Login")); 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <GenericErrorBoundary>
-        <Home />
+        <ProtectedRoute>
+          <Home />
+        </ProtectedRoute>
       </GenericErrorBoundary>
     ),
   },
@@ -20,7 +23,9 @@ const router = createBrowserRouter([
     path: "/profile",
     element: (
       <GenericErrorBoundary>
-        <Profile />
+        <ProtectedRoute>
+          <Home />
+        </ProtectedRoute>
       </GenericErrorBoundary>
     ),
   },
@@ -28,13 +33,23 @@ const router = createBrowserRouter([
     path: "/workout",
     element: (
       <GenericErrorBoundary>
-        <Workout />
+        <ProtectedRoute>
+          <Workout />
+        </ProtectedRoute>
+      </GenericErrorBoundary>
+    ),
+  },
+  {
+    path: "/login",
+    element: (
+      <GenericErrorBoundary>
+        <Login />
       </GenericErrorBoundary>
     ),
   },
   {
     path: "*",
-    element: <Navigate to="/" />
+    element: <Navigate to="/" />,
   },
 ]);
 

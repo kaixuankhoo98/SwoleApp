@@ -1,5 +1,6 @@
 # SwoleApp
-Gym tracking application with .NET 7 Web API backend and React frontend
+Backend is written in Go, using a JWT auth, Gin, and GORM. You can find the repo for that in the [backend repository](https://github.com/kaixuankhoo98/go-jwt).
 
 ## Progress
-Currently working on a front end React Native application!
+The backend is currently written up, and I am about to start clean with the react front end!
+

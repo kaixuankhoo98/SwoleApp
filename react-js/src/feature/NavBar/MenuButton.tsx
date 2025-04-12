@@ -33,6 +33,7 @@ const MenuButton: FC = () => {
       {open && (
         <Menu
           open
+          anchorEl={anchorEl}
           onClose={handleClose}
           anchorOrigin={{
             vertical: "top",

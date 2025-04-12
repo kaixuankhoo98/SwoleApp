@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { apiRequest } from "../../shared/hooks/api"
+import { apiRequestManual } from "../../shared/hooks/api"
 import dayjs, { Dayjs } from "dayjs"
 import { z } from "zod"
 
@@ -16,7 +16,7 @@ export const useGetWorkouts = (date?: Dayjs) => {
   return useQuery({
     queryKey: [WorkoutEndpoint.Workouts, date],
     queryFn: async () => {
-      const result = await apiRequest<DateSchemma>(WorkoutEndpoint.Workouts, {
+      const result = await apiRequestManual<DateSchemma>(WorkoutEndpoint.Workouts, {
         method: 'GET',
         queryParams: { date: date?.format() ?? currentDate.format() }
       });
