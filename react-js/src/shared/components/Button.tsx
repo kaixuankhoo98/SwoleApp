@@ -12,7 +12,7 @@ type ButtonProps = BaseButtonProps & {
   isLoading?: boolean;
 };
 
-const Button: FC<ButtonProps> = ({ filled, isLoading, ...otherProps }) => {
+const Button: FC<ButtonProps> = ({ filled, isLoading, sx, ...otherProps }) => {
   return (
     <BaseButton
       variant={filled ? "contained" : "outlined"}
@@ -27,6 +27,7 @@ const Button: FC<ButtonProps> = ({ filled, isLoading, ...otherProps }) => {
           ? alpha(colors.white, 0.6)
           : alpha(colors.casalGrey, 0.6),
         },
+        ...sx,
       }}
       {...otherProps}
     >

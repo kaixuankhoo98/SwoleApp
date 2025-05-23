@@ -10,7 +10,14 @@ type AppWrapperProps = {
   children: ReactNode;
 };
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60, // Data is considered fresh for 1 minute
+      gcTime: 1000 * 60 * 5, // Cache is kept for 5 minutes
+    },
+  },
+});
 
 const AppWrapper: FC<AppWrapperProps> = ({ children }) => {
   return (

@@ -20,7 +20,7 @@ export const useLogin = () => {
   
   return useMutation({
     mutationFn: async (request: LoginSchema) => {
-      await apiRequest<{}>(UserEndpoints.Login, {
+      await apiRequest(UserEndpoints.Login, {
         method: "POST",
         body: request,
       });
@@ -51,7 +51,7 @@ export const useSignUp = () => {
   
   return useMutation({
     mutationFn: async (request: SignupSchema) => {
-      await apiRequest<{}>(UserEndpoints.SignUp, {
+      await apiRequest(UserEndpoints.SignUp, {
         method: "POST",
         body: request,
       });
@@ -71,13 +71,13 @@ export const useLogout = () =>
 // Validate
 const userSchema = z.object({
   userId: z.number(),
-  username: z.string(),
+  email: z.string(),
 });
 export type UserSchema = z.infer<typeof userSchema>;
 export const useUser = () =>
   useQuery({
     queryKey: [UserEndpoints.Validate],
     queryFn: async () =>
-      userSchema.parse(await apiRequest<UserSchema>(UserEndpoints.Validate)),
+      userSchema.parse(await apiRequest(UserEndpoints.Validate)),
     retry: false,
   });

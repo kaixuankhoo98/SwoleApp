@@ -1,4 +1,4 @@
-import { Check, Close, Logout } from "@mui/icons-material";
+import { Logout } from "@mui/icons-material";
 import { Dialog, Divider, IconButton, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useAuth } from "../../app/AuthContext";

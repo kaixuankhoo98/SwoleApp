@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { api } from "./axios";
 
 export const apiRequest = async <Response = unknown>(
@@ -25,4 +26,24 @@ export const apiRequest = async <Response = unknown>(
     console.error('API Request Failed:', error);
     throw error;
   }
+};
+
+export const apiRequestWithValidation = <T extends z.ZodType>(
+  schema: T,
+  url: string,
+  options: {
+    method?: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    queryParams?: Record<string, any>,
+    body?: any,
+    headers?: Record<string, string>,
+  } = {}
+) => {
+  return apiRequest<z.infer<T>>(url, options).then((response) => {
+    try {
+      return schema.parse(response);
+    } catch (error) {
+      console.error('Validation error:', error);
+      throw error;
+    }
+  });
 };
