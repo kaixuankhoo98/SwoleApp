@@ -1,40 +1,48 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { apiRequest } from "../shared/hooks/api";
 
-type User = { id: number } | null;
+type User = { userId: number, username: string };
 
 const AuthContext = createContext<{
-  user: User;
+  user: User | null;
   isLoading: boolean;
-  setUser: (u: User) => void;
+  setUser: (u: User | null) => void;
+  validate: () => Promise<void>;
 }>({
   user: null,
   isLoading: true,
   setUser: () => {},
+  validate: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  // const location = useLocation();
 
-  useEffect(() => {
-    const validate = async () => {
-      try {
-        const res = await apiRequest<{ userId: number }>("/validate");
-        setUser({ id: res.userId });
-      } catch (err) {
-        setUser(null);
-        // no need to navigate here if you have 401 intercept set up
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    validate();
+  // TODO: try to stop validate when on login or signup page
+  const validate = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const res = await apiRequest<User>("/validate");
+      setUser({ userId: res.userId, username: res.username });
+    } catch (err) {
+      setUser(null);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
+  useEffect(() => {
+    // if (location.pathname === "/login" || location.pathname === "/signup") {
+    //   setIsLoading(false);
+    //   return;
+    // }
+    validate();
+  }, [validate, location.pathname]);
+
   return (
-    <AuthContext.Provider value={{ user, isLoading, setUser }}>
+    <AuthContext.Provider value={{ user, isLoading, setUser, validate }}>
       {children}
     </AuthContext.Provider>
   );

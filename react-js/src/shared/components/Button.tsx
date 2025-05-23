@@ -1,24 +1,40 @@
-import { Button as BaseButton } from "@mui/material";
-import { FC, ReactNode } from "react";
+import {
+  alpha,
+  Button as BaseButton,
+  ButtonProps as BaseButtonProps,
+  CircularProgress,
+} from "@mui/material";
+import { FC } from "react";
 import colors from "../theme/colors";
 
-interface ButtonProps {
-  children: ReactNode;
-  onClick: () => void;
+type ButtonProps = BaseButtonProps & {
   filled?: boolean;
-}
+  isLoading?: boolean;
+};
 
-const Button: FC<ButtonProps> = ({ children, onClick, filled }) => {
+const Button: FC<ButtonProps> = ({ filled, isLoading, ...otherProps }) => {
   return (
     <BaseButton
       variant={filled ? "contained" : "outlined"}
       sx={{
-        backgroundColor: filled ? colors.regentGrey : null,
-        color: filled ? 'black' : 'white'
+        padding: "0.625rem 1.125rem",
+        height: "2.5rem",
+        backgroundColor: filled ? colors.white : colors.casalGrey,
+        color: filled ? colors.blackDark : colors.white,
+        borderColor: colors.white,
+        "&:hover": {
+          backgroundColor: filled
+          ? alpha(colors.white, 0.6)
+          : alpha(colors.casalGrey, 0.6),
+        },
       }}
-      onClick={onClick}
+      {...otherProps}
     >
-      {children}
+      {isLoading ? (
+        <CircularProgress size='1rem' sx={{ color: filled ? colors.darkInfo : colors.white }}/>
+      ) : (
+        otherProps.children
+      )}
     </BaseButton>
   );
 };

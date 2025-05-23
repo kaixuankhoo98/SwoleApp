@@ -8,9 +8,11 @@ type MainProps = {
 
 const Main: FC<MainProps> = ({ children }) => {
   return (
-    <Box sx={{ flex: 1 }} component='main'>
-      <NavBar/>
-      <Box sx={{ padding: '1rem' }}>
+    <Box sx={{ flex: 1 }}>
+      <Box component="header">
+        <NavBar/>
+      </Box>
+      <Box sx={{ padding: '1rem' }} component="main">
         {children}
       </Box>
     </Box>

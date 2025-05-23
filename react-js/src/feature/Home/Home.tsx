@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Button, Stack, Typography } from "@mui/material";
 import Main from "../Main/Main";
 import StartWorkoutButton from "./StartWorkoutButton";
-import { PreviousWorkouts } from "./PreviousWorkouts";
+import { PreviousWorkouts } from "../PreviousWorkouts/PreviousWorkouts";
 import { useSnackbar } from "../../shared/hooks/snackbar";
 
 const Home: FC = () => {

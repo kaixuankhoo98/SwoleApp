@@ -3,10 +3,11 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 import Home from "../Home/Home";
 import { GenericErrorBoundary } from "../../shared/components/Error/GenericErrorBoundary";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { Login } from "../Auth/Login";
+import { SignUp } from "../Auth/SignUp";
 
 // const Profile = lazy(() => import("../Home/Home")); 
-const Workout = lazy(() => import("../Workout/Workout")); 
-const Login = lazy(() => import("../Auth/Login")); 
+const Workout = lazy(() => import("../Workout/Workout"));
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,14 @@ const router = createBrowserRouter([
         <Login />
       </GenericErrorBoundary>
     ),
+  },
+  {
+    path: "/signup",
+    element: (
+      <GenericErrorBoundary>
+        <SignUp />
+      </GenericErrorBoundary>
+    )
   },
   {
     path: "*",

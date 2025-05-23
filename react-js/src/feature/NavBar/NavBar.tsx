@@ -1,30 +1,11 @@
-import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
-import {
-  Logout,
-  SettingsOutlined,
-} from "@mui/icons-material";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import { FC } from "react";
 import MenuButton from "./MenuButton";
 import { useNavigate } from "react-router-dom";
-import { useLogout } from "../Auth/authHooks";
-import { useQueryClient } from "@tanstack/react-query";
-import { useAuth } from "../../app/AuthContext";
+import { LogoutButton } from "./LogoutButton";
 
 const NavBar: FC = () => {
   const navigate = useNavigate();
-  const { setUser } = useAuth();
-
-  const queryClient = useQueryClient();
-  const { mutate: logout } = useLogout();
-  const handleLogout = () => {
-    logout(undefined, {
-      onSuccess: () => {
-        queryClient.clear();
-        setUser(null);
-        navigate("/login");
-      },
-    });
-  }
   
   return (
     <>
@@ -37,12 +18,7 @@ const NavBar: FC = () => {
             </Typography>
           </Box>
           <Box sx={{ marginLeft: "auto", display: "flex" }}>
-            <IconButton onClick={() => navigate('/settings')}>
-              <SettingsOutlined />
-            </IconButton>
-            <IconButton onClick={handleLogout}>
-              <Logout />
-            </IconButton>
+            <LogoutButton />
           </Box>
         </Toolbar>
       </AppBar>
