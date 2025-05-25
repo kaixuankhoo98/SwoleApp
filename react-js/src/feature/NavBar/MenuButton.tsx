@@ -1,4 +1,5 @@
 import {
+  Build,
   Close,
   FitnessCenter,
   Home,
@@ -55,6 +56,11 @@ const MenuButton: FC = () => {
             onClick={() => navigate("/workout")}
             text="Start a Workout"
             icon={<FitnessCenter />}
+          />
+          <MenuItem
+            onClick={() => navigate("/configure")}
+            text="Configure Workouts"
+            icon={<Build />}
           />
           <MenuItem
             onClick={() => navigate("/settings")}

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
-import { apiRequest } from "../../shared/hooks/api";
+import { apiCall } from "../../shared/hooks/api";
+import { HttpMethod } from "../../shared/hooks/http";
 
 enum UserEndpoints {
   Login = "/login",
@@ -20,10 +21,11 @@ export const useLogin = () => {
   
   return useMutation({
     mutationFn: async (request: LoginSchema) => {
-      await apiRequest<{}>(UserEndpoints.Login, {
-        method: "POST",
+      await apiCall({
+        route: UserEndpoints.Login,
+        method: HttpMethod.Post,
         body: request,
-      });
+      }, z.object({}));
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [UserEndpoints.Validate] });
@@ -51,10 +53,11 @@ export const useSignUp = () => {
   
   return useMutation({
     mutationFn: async (request: SignupSchema) => {
-      await apiRequest<{}>(UserEndpoints.SignUp, {
-        method: "POST",
+      await apiCall({
+        route: UserEndpoints.SignUp,
+        method: HttpMethod.Post,
         body: request,
-      });
+      }, z.object({}));
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [UserEndpoints.Validate] });
@@ -65,19 +68,27 @@ export const useSignUp = () => {
 // Logout
 export const useLogout = () =>
   useMutation({
-    mutationFn: () => apiRequest(UserEndpoints.Logout, { method: "POST" }),
+    mutationFn: () => apiCall({
+      route: UserEndpoints.Logout,
+      method: HttpMethod.Post,
+    }, z.object({
+      message: z.string(),
+    })),
   });
 
 // Validate
 const userSchema = z.object({
   userId: z.number(),
-  username: z.string(),
+  email: z.string(),
 });
 export type UserSchema = z.infer<typeof userSchema>;
 export const useUser = () =>
   useQuery({
     queryKey: [UserEndpoints.Validate],
     queryFn: async () =>
-      userSchema.parse(await apiRequest<UserSchema>(UserEndpoints.Validate)),
+      userSchema.parse(await apiCall({
+        route: UserEndpoints.Validate,
+        method: HttpMethod.Get,
+      }, userSchema)),  
     retry: false,
   });

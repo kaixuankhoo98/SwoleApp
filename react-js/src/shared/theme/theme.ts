@@ -32,7 +32,7 @@ const theme = createTheme({
     }
   },
   typography: {
-    fontFamily: "'sans-serif'",
+    fontFamily: "monospace",
     fontSize: 16,
     fontWeightBold: 700,
     fontWeightLight: 300,
