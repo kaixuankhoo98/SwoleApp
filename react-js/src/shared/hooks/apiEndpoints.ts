@@ -3,6 +3,7 @@ export enum ApiEndpoints {
   Workout = "/workout/:workoutId",
   OpenWorkouts = "/workouts/open",
   CreateWorkout = "/createWorkout",
+  EndWorkout = "/endWorkout/:workoutId",
   ArchivedWorkouts = "/workouts/archived",
   RestoreWorkout = "/workout/:workoutId/restore",
   DeleteWorkoutPermanent = "/workout/:workoutId/permanent",

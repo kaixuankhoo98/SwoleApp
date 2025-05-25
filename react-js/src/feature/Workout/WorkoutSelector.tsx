@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { useCreateWorkout, useDeleteWorkout } from "./workoutHooks";
+import { useCreateWorkout, useDeleteWorkout } from "./hooks/workoutHooks";
 import { useWorkoutStore } from "./workoutStore";
 import Button from "../../shared/components/Button";
 import { useOpenWorkouts } from "../PreviousWorkouts/previousWorkoutHooks";

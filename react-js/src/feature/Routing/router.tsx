@@ -7,6 +7,7 @@ import { Login } from "../Auth/Login";
 import { SignUp } from "../Auth/SignUp";
 
 // const Profile = lazy(() => import("../Home/Home")); 
+const ConfigureWorkouts = lazy(() => import("../ConfigureWorkouts/ConfigureWorkouts"));
 const Workout = lazy(() => import("../Workout/Workout"));
 
 const router = createBrowserRouter([
@@ -36,6 +37,16 @@ const router = createBrowserRouter([
       <GenericErrorBoundary>
         <ProtectedRoute>
           <Workout />
+        </ProtectedRoute>
+      </GenericErrorBoundary>
+    ),
+  },
+  {
+    path: "/configure",
+    element: (
+      <GenericErrorBoundary>
+        <ProtectedRoute>
+          <ConfigureWorkouts />
         </ProtectedRoute>
       </GenericErrorBoundary>
     ),

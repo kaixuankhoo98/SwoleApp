@@ -2,10 +2,10 @@ import { Stack } from "@mui/material";
 import Main from "../Main/Main";
 import { useWorkoutStore } from "./workoutStore";
 import { WorkoutSelector } from "./WorkoutSelector";
-import Button from "../../shared/components/Button";
+import { WorkoutEditor } from "./WorkoutEditor/WorkoutEditor";
 
 const Workout = () => {
-  const { workout, setWorkout } = useWorkoutStore();
+  const { workout } = useWorkoutStore();
 
   return (
     <Main>
@@ -13,10 +13,7 @@ const Workout = () => {
         {!workout ? (
           <WorkoutSelector />
         ) : (
-          <div>
-            Active Workout: {workout.workoutId}
-            <Button onClick={() => setWorkout(null)}>Exit Workout</Button>
-          </div>
+          <WorkoutEditor />
         )}
       </Stack>
     </Main>
