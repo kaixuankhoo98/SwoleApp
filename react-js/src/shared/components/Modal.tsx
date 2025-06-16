@@ -1,7 +1,6 @@
-import { Dialog, DialogContent, Divider } from "@mui/material";
+import { Dialog, DialogContent, Divider, Stack } from "@mui/material";
 import { FC, ReactNode } from "react";
 import { DialogTitle } from "./DialogTitle";
-import { ButtonStack } from "./ButtonStack";
 import Button from "./Button";
 
 interface ModalProps {
@@ -11,25 +10,42 @@ interface ModalProps {
   title?: string;
   confirmText?: string;
   cancelText?: string;
+  isConfirmLoading?: boolean;
 }
 
-const Modal: FC<ModalProps> = ({ children, onClose, onConfirm, title, confirmText, cancelText }) => {
+const Modal: FC<ModalProps> = ({ children, onClose, onConfirm, title, confirmText, cancelText, isConfirmLoading }) => {
   return (
-    <Dialog onClose={onClose} open sx={{ padding: '2rem'}}>
+    <Dialog 
+      onClose={onClose} 
+      open 
+      sx={{ 
+        padding: '2rem',
+        '& .MuiDialog-paper': {
+          borderRadius: '0.5rem',
+        }
+      }}
+    >
       <DialogTitle onClose={onClose}>{title}</DialogTitle>
       <Divider />
       <DialogContent>
         {children}
       </DialogContent>
       <Divider />
-      <ButtonStack direction="row" sx={{ justifyContent: 'flex-end' }}>
-          <Button filled onClick={onClose}>
-            {cancelText ?? 'Cancel'}
-          </Button>
-          <Button onClick={onConfirm}>
-            {confirmText ?? 'Confirm'}
-          </Button>
-        </ButtonStack>
+      <Stack 
+        direction="row" 
+        sx={{ 
+          p: '0.5rem',
+          justifyContent: 'center', 
+          gap: '1rem' 
+        }}
+      >
+        <Button filled onClick={onClose}>
+          {cancelText ?? 'Cancel'}
+        </Button>
+        <Button onClick={onConfirm} isLoading={isConfirmLoading}>
+          {confirmText ?? 'Confirm'}
+        </Button>
+      </Stack>
     </Dialog>
   );
 };

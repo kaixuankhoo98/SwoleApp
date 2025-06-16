@@ -12,6 +12,7 @@ const colors = {
   osloGrey: '#828B8F',
   white: '#fff',
   silver: '#B3B9BB',
+  black: '#000',
 
   blue250: '#1b99bf',
   greyExtraLight: '#F6F6F7',

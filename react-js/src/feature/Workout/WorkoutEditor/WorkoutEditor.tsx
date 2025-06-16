@@ -60,7 +60,6 @@ export const WorkoutEditor: FC = () => {
         End Workout
       </Button>
       {endWorkoutModalOpen && (
-
         <Modal title="End Workout" onClose={() => setEndWorkoutModalOpen(false)} onConfirm={() => handleEndWorkout()}>
           <Typography>Are you sure you want to end this workout?</Typography>
         </Modal>
