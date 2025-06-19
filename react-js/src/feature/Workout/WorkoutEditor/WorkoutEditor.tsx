@@ -55,7 +55,7 @@ export const WorkoutEditor: FC = () => {
         <Button onClick={() => setWorkout(null)}>Exit Workout</Button>
       </Stack>
       <WorkoutEditorHeader workout={workoutData} />
-      <ExerciseEditor />
+      <ExerciseEditor workout={workoutData} />
       <Button onClick={() => setEndWorkoutModalOpen(true)}>
         End Workout
       </Button>

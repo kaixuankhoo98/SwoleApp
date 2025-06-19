@@ -4,11 +4,10 @@ import { Accordion } from "../../shared/components/Accordion";
 import { GroupRow } from "./GroupRow";
 import { AddGroupButton } from "./AddGroupButton";
 import { Loading } from "../../shared/components/Loading";
-import { UseQueryResult } from "@tanstack/react-query";
-import { Group } from "./hooks/types";
+import { useGetGroups } from "./hooks/groupHooks";
 
-export const Groups: FC<{ getGroups: UseQueryResult<Group[], Error> }> = ({ getGroups }) => {
-  const { data: groups, isLoading } = getGroups;
+export const Groups: FC = () => {
+  const { data: groups, isLoading } = useGetGroups();
 
   return (
     <Accordion title="Groups">

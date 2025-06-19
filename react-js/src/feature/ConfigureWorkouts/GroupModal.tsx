@@ -1,10 +1,11 @@
 import { FC } from "react"
 import Modal from "../../shared/components/Modal"
-import { group, Group } from "./hooks/types";
+import { Group } from "./hooks/types";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, Stack, TextField } from "@mui/material";
 import { useCreateGroup, useUpdateGroup } from "./hooks/groupHooks";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 type GroupModalProps = {
   onClose: () => void;
@@ -16,7 +17,10 @@ export const GroupModal: FC<GroupModalProps> = ({ onClose, edit }) => {
     defaultValues: {
       name: edit?.name ?? '',
     },
-    resolver: zodResolver(group)
+    resolver: zodResolver(z.object({
+      id: edit ? z.number() : z.undefined(),
+      name: z.string().min(1, { message: 'Name is required' }),
+    }))
   });
 
   const { mutate: createGroup, isPending: isCreatingGroup, isError: isCreateError } = useCreateGroup();

@@ -1,33 +1,16 @@
-import { FC, useMemo } from "react"
+import { FC } from "react"
 import { Accordion } from "../../shared/components/Accordion"
 import { Box, Stack, Typography } from "@mui/material"
-import { useGetExerciseTypes } from "./hooks/exerciseTypeHooks";
 import { AddExerciseTypeButton } from "./AddExerciseTypeButton";
-import { UseQueryResult } from "@tanstack/react-query";
-import { ExerciseType, Group } from "./hooks/types";
 import { Loading } from "../../shared/components/Loading";
 import colors from "../../shared/theme/colors";
 import { ExerciseTypeRow } from "./ExerciseTypeRow";
+import { useExerciseTypesByGroup } from "./hooks/useExerciseTypesByGroup";
 
-export const ExerciseTypes: FC<{ getGroups: UseQueryResult<Group[], Error> }> = ({ getGroups }) => {
-  const { data: exerciseTypes, isLoading } = useGetExerciseTypes();
-  const { data: groups } = getGroups;
+export const ExerciseTypes: FC = () => {
+  const { groups, exerciseTypesByGroup, isLoading } = useExerciseTypesByGroup();
 
-  // Create a map of group IDs to their exercise types
-  const exerciseTypesByGroup = useMemo(() => {
-    if (!exerciseTypes) return new Map<number, ExerciseType[]>();
-    
-    return exerciseTypes.reduce((acc, exerciseType) => {
-      const groupId = exerciseType.groupId;
-      if (!groupId) return acc;
-      
-      const existing = acc.get(groupId) ?? [];
-      acc.set(groupId, [...existing, exerciseType]);
-      return acc;
-    }, new Map<number, ExerciseType[]>());
-  }, [exerciseTypes]);
-
-  if (isLoading || !groups || !exerciseTypes) {
+  if (isLoading || !groups || !exerciseTypesByGroup) {
     return <Loading />
   }
 

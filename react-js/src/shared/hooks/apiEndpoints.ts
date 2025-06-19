@@ -16,4 +16,8 @@ export enum ApiEndpoints {
   ExerciseTypes = "/exerciseTypes",
   CreateExerciseType = "/exerciseType",
   ExerciseType = "/exerciseType/:exerciseTypeId",
+
+  Exercises = "/exercises",
+  CreateExercise = "/exercise",
+  Exercise = "/exercise/:exerciseId",
 }

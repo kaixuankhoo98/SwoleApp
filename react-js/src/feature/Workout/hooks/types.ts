@@ -21,11 +21,14 @@ export const setResponse = z.object({
   reps: z.number(),
   weight: z.number(),
 });
+export type SetResponse = z.infer<typeof setResponse>;
 export const exerciseResponse = z.object({
   id: z.number(),
-  name: z.string(),
+  exerciseType: z.string(),
+  exerciseTypeId: z.number(),
   sets: z.array(setResponse),
 });
+export type ExerciseResponse = z.infer<typeof exerciseResponse>;
 export const getWorkout = workout.extend({
   exercises: z.array(exerciseResponse),
 });
