@@ -9,7 +9,11 @@ const Workout = () => {
 
   return (
     <Main>
-      <Stack direction='column' gap='1rem' alignItems='center'>
+      <Stack
+        direction='column' 
+        gap='1rem' 
+        alignItems='center' 
+      >
         {!workout ? (
           <WorkoutSelector />
         ) : (

@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { useWorkoutStore } from '../workoutStore';
 import Button from '../../../shared/components/Button';
-import { Box, Stack, Typography } from '@mui/material';
+import { alpha, Box, Stack, Typography } from '@mui/material';
 import { useEndWorkout, useGetWorkout } from '../hooks/workoutHooks';
 import { WorkoutTimer } from './WorkoutTimer';
 import { addSeconds } from 'date-fns';
@@ -10,6 +10,7 @@ import { ExerciseEditor } from './ExerciseEditor';
 import { GetWorkout } from '../hooks/types';
 import Modal from '../../../shared/components/Modal';
 import { useNavigate } from 'react-router-dom';
+import colors from '../../../shared/theme/colors';
 
 const WorkoutEditorHeader: FC<{ workout: GetWorkout | undefined }> = ({ workout }) => {
   const startTime = workout?.startTime ? new Date(workout.startTime) : new Date(0);
@@ -49,14 +50,27 @@ export const WorkoutEditor: FC = () => {
   }
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ p: '0.5rem', width: '100%', display: 'flex', flexDirection: 'column' }}>
       <Stack direction="row" gap="1rem" justifyContent="space-between" alignItems="center">
         <Typography>Active Workout: {workout?.workoutId}</Typography>
         <Button onClick={() => setWorkout(null)}>Exit Workout</Button>
       </Stack>
       <WorkoutEditorHeader workout={workoutData} />
       <ExerciseEditor workout={workoutData} />
-      <Button onClick={() => setEndWorkoutModalOpen(true)}>
+      <Button 
+        sx={{ 
+          width: '15rem', 
+          alignSelf: 'center', 
+          mt: '1rem', 
+          backgroundColor: colors.darkRed,
+          border: `2px solid ${colors.blackDark}`,
+          color: colors.white,
+          "&:hover": {
+            backgroundColor: alpha(colors.darkRed, 0.8),
+          },
+        }} 
+        onClick={() => setEndWorkoutModalOpen(true)}
+      >
         End Workout
       </Button>
       {endWorkoutModalOpen && (

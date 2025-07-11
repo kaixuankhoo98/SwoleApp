@@ -11,9 +11,21 @@ interface ModalProps {
   confirmText?: string;
   cancelText?: string;
   isConfirmLoading?: boolean;
+  maxHeight?: boolean;
+  maxWidth?: boolean;
 }
 
-const Modal: FC<ModalProps> = ({ children, onClose, onConfirm, title, confirmText, cancelText, isConfirmLoading }) => {
+const Modal: FC<ModalProps> = ({ 
+  children, 
+  onClose, 
+  onConfirm, 
+  title, 
+  confirmText, 
+  cancelText, 
+  isConfirmLoading, 
+  maxHeight = false, 
+  maxWidth = false 
+}) => {
   return (
     <Dialog 
       onClose={onClose} 
@@ -22,6 +34,8 @@ const Modal: FC<ModalProps> = ({ children, onClose, onConfirm, title, confirmTex
         padding: '2rem',
         '& .MuiDialog-paper': {
           borderRadius: '0.5rem',
+          height: maxHeight ? '95%' : 'auto',
+          width: maxWidth ? '95%' : 'auto',
         }
       }}
     >

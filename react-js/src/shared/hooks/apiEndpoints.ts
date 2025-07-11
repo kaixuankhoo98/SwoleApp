@@ -20,4 +20,9 @@ export enum ApiEndpoints {
   Exercises = "/exercises",
   CreateExercise = "/exercise",
   Exercise = "/exercise/:exerciseId",
+
+  Sets = "/sets",
+  CreateWeightedSet = "/set/weighted",
+  CreateDurationSet = "/set/duration",
+  Set = "/set/:setId",
 }

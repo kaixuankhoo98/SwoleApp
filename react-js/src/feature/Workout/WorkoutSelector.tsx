@@ -37,7 +37,7 @@ export const WorkoutSelector: FC = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <Button filled onClick={handleCreateWorkout} sx={{ width: '20rem' }}>
+      <Button filled onClick={handleCreateWorkout} sx={{ width: '20rem', mt: '3rem' }}>
         Start New Workout
       </Button>
 

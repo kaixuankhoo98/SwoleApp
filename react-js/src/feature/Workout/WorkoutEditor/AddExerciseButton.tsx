@@ -7,7 +7,7 @@ export const AddExerciseButton: FC = () => {
 
   return (
     <>
-      <Button onClick={() => setIsModalOpen(true)}>Add Exercise</Button>
+      <Button sx={{ width: '15rem', alignSelf: 'center' }} onClick={() => setIsModalOpen(true)}>Add Exercise</Button>
       {isModalOpen && <ExerciseModal onClose={() => setIsModalOpen(false)} />}
     </>
   )

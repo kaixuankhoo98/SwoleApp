@@ -1,8 +1,7 @@
 import { FC, useMemo, useState } from "react";
 import Modal from "../../../shared/components/Modal";
-import { useGetExerciseTypes } from "../../ConfigureWorkouts/hooks/exerciseTypeHooks";
 import { useExerciseTypesByGroup } from "../../ConfigureWorkouts/hooks/useExerciseTypesByGroup";
-import { Button, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, Typography } from "@mui/material";
+import { alpha, Autocomplete, Button, FormControlLabel, Radio, RadioGroup, Stack, TextField, Typography } from "@mui/material";
 import { ExerciseResponse } from "../hooks/types";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,16 +23,21 @@ enum FilterOptions {
 
 const ExerciseTypeRow: FC<{ exerciseType: ExerciseType, isSelected: boolean, onClick: () => void }> = ({ exerciseType, isSelected, onClick }) => {
   return (
-    <Button component="button" onClick={onClick} sx={{ 
+    <Button onClick={onClick} sx={{ 
       border: '1px solid',
-      borderColor: isSelected ? colors.casalGrey : colors.casalGrey,
-      backgroundColor: isSelected ? colors.casalGrey : colors.casalGrey,
-      color: isSelected ? colors.black : colors.white,
+      borderColor: isSelected ? colors.blue100 : colors.black,
+      backgroundColor: isSelected ? colors.grey100 : colors.casalGrey,
+      color: colors.white,
       width: '100%',
       justifyContent: 'flex-start',
       textTransform: 'none',
       fontSize: '1rem',
       fontWeight: 'bold',
+      "&:hover": {
+        backgroundColor: isSelected
+          ? alpha(colors.grey100, 0.6)
+          : alpha(colors.casalGrey, 0.6),
+        },
     }}>
       <Typography>{exerciseType.name}</Typography>
     </Button>
@@ -44,10 +48,10 @@ export const ExerciseModal: FC<ExerciseModalProps> = ({
   edit,
   onClose,
 }) => {
-  const { data: exerciseTypes } = useGetExerciseTypes();
-  const { exerciseTypesByGroup, getGroupName } = useExerciseTypesByGroup();
+  const { exerciseTypes, exerciseTypesByGroup, getGroupName, groups } = useExerciseTypesByGroup();
   const [searchTerm, setSearchTerm] = useState("");
   const [ selectedFilter, setSelectedFilter ] = useState<FilterOptions>(FilterOptions.GROUP);
+  const [ selectedGroup, setSelectedGroup ] = useState<number | null>(null);
 
   const filteredExerciseTypes = useMemo(() => {
     if (selectedFilter === FilterOptions.ALL) {
@@ -57,7 +61,6 @@ export const ExerciseModal: FC<ExerciseModalProps> = ({
       
       return filtered.sort((a, b) => a.name.localeCompare(b.name));
     } else {
-      // Group filter - return all exercise types grouped by their group
       const allExerciseTypes = exerciseTypes ?? [];
       const filtered = allExerciseTypes.filter((exerciseType) => 
         exerciseType.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -67,7 +70,7 @@ export const ExerciseModal: FC<ExerciseModalProps> = ({
     }
   }, [exerciseTypes, searchTerm, selectedFilter, exerciseTypesByGroup]);
 
-  const { control, handleSubmit } = useForm<ExerciseResponse>({
+  const { control, handleSubmit, watch } = useForm<ExerciseResponse>({
     defaultValues: {
       exerciseTypeId: edit?.exerciseTypeId ?? 0,
     },
@@ -77,6 +80,8 @@ export const ExerciseModal: FC<ExerciseModalProps> = ({
       })
     ),
   });
+
+  const selectedExerciseTypeId = watch('exerciseTypeId');
 
   const { mutate: createExercise } = useCreateExercise();
   const { mutate: updateExercise } = useUpdateExercise();
@@ -98,18 +103,31 @@ export const ExerciseModal: FC<ExerciseModalProps> = ({
   }
 
   return (
-    <Modal title={edit ? 'Edit Exercise' : 'Add Exercise'} onClose={onClose} onConfirm={handleSubmit(onSubmit)}>
+    <Modal 
+      title={edit ? 'Edit Exercise' : 'Add Exercise'} 
+      onClose={onClose} 
+      onConfirm={handleSubmit(onSubmit)} 
+      maxHeight 
+      maxWidth
+    >
       <Stack direction="column" gap="1rem">
         <SearchFilter onSearchChange={setSearchTerm} label="Search Exercise" />
         <RadioGroup
+          sx={{ flexDirection: 'row', }}
           value={selectedFilter} 
           onChange={(e) => setSelectedFilter(e.target.value as FilterOptions)}
         >
-          <FormLabel>Filter by</FormLabel>
           <FormControlLabel value={FilterOptions.ALL} control={<Radio />} label="All" />
           <FormControlLabel value={FilterOptions.GROUP} control={<Radio />} label="Group" />
         </RadioGroup>
-        
+        {selectedFilter === FilterOptions.GROUP && (
+          <Autocomplete
+            options={groups ? groups.map((group) => ({label: group.name, value: group.id})) : []}
+            getOptionLabel={(option) => option.label}
+            renderInput={(params) => <TextField {...params} label="Group" />}
+            onChange={(_, value) => setSelectedGroup(value?.value ?? null)}
+          />
+        )}
 
         <Controller
           control={control}
@@ -129,12 +147,12 @@ export const ExerciseModal: FC<ExerciseModalProps> = ({
               ) : (
                 // Show exercise types grouped by their group
                 Array.from(exerciseTypesByGroup.entries()).map(([groupId, groupExerciseTypes]) => {
+                  // If a group is selected, only show exercise types in that group
+                  if (selectedGroup && groupId !== selectedGroup) return null;
                   const filteredGroupTypes = groupExerciseTypes.filter((exerciseType) => 
                     exerciseType.name.toLowerCase().includes(searchTerm.toLowerCase())
                   );
-                  
                   if (filteredGroupTypes.length === 0) return null;
-                  
                   return (
                     <Stack key={groupId} direction="column" gap="0.25rem" sx={{ mb: '0.75rem' }}>
                       <Typography sx={{ fontWeight: 'bold', color: colors.white }}>
@@ -144,7 +162,7 @@ export const ExerciseModal: FC<ExerciseModalProps> = ({
                         <ExerciseTypeRow 
                           exerciseType={exerciseType} 
                           key={exerciseType.id} 
-                          isSelected={field.value === exerciseType.id} 
+                          isSelected={selectedExerciseTypeId === exerciseType.id} 
                           onClick={() => field.onChange(exerciseType.id)} 
                         />
                       ))}

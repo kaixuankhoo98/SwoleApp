@@ -10,7 +10,7 @@ export const groups = z.array(group);
 
 export enum ExerciseTypeEnum {
   weight = 'weight',
-  time = 'time',
+  duration = 'duration',
   distance = 'distance',
 }
 

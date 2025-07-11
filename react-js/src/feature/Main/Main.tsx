@@ -12,7 +12,7 @@ const Main: FC<MainProps> = ({ children }) => {
       <Box component="header">
         <NavBar/>
       </Box>
-      <Box sx={{ padding: '1rem' }} component="main">
+      <Box component="main">
         {children}
       </Box>
     </Box>
